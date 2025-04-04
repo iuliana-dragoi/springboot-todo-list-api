@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Task List</title>
+    </head>
+
+    <body>
+        <h2>Task List</h2>
+        <a th:href="@{/tasks/create}">Add New Task</a>
+
+        <form method="get" th:action="@{/tasks}">
+            <label for="completed">Filter:</label>
+            <select name="completed">
+                <option value="">All</option>
+                <option value="true">Completed</option>
+                <option value="false">Pending</option>
+            </select>
+            <button type="submit">Apply</button>
+        </form>
+
+        <table border="1">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.title}">Title</td>
+                <td th:text="${task.description}">Desc</td>
+                <td th:text="${task.dueDate}">Date</td>
+                <td th:text="${task.completed ? 'Completed' : 'Pending'}"></td>
+                <td>
+                    <a th:href="@{'/tasks/edit/' + ${task.id}}">Edit</a>
+                    <a th:href="@{'/tasks/delete/' + ${task.id}}">Delete</a>
+                    <a th:href="@{'/tasks/toggle/' + ${task.id}}"
+                       th:text="${task.completed ? 'Mark Pending' : 'Mark Done'}"></a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
