@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Register</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body class="d-flex align-items-center justify-content-center vh-100 bg-light">
+        <div class="card shadow-lg p-4" style="width: 350px;">
+            <h3 class="text-center mb-4">Register</h3>
+
+            <div th:if="${userExistsError}" class="alert alert-danger">
+                <p style="margin-bottom: 0px" th:text="${userExistsError}"></p>
+            </div>
+
+            <form th:action="@{/register}" method="post" th:object="${user}">
+                <div th:if="${param.register}" class="alert alert-success">
+                    Registration successful! You can now log in.
+                </div>
+
+                <!-- Username Field -->
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" th:field="*{username}" class="form-control" required>
+                    <p th:each="error : ${#fields.errors('username')}" class="text-danger" th:text="${error}">Validation error</p>
+                </div>
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" th:field="*{email}" class="form-control" required>
+                    <p th:each="error : ${#fields.errors('email')}" class="text-danger" th:text="${error}">Validation error</p>
+                </div>
+
+                <!-- Password Field -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" th:field="*{password}" class="form-control" required>
+                    <p th:each="error : ${#fields.errors('password')}" class="text-danger" th:text="${error}">Validation error</p>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirmPassword" th:field="*{matchingPassword}" class="form-control" required>
+                    <p th:each="error : ${#fields.errors('matchingPassword')}" class="text-danger" th:text="${error}">Validation error</p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
