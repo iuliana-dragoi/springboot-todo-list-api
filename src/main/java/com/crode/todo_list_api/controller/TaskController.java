@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -46,9 +47,12 @@ public class TaskController {
         TaskDto dto = new TaskDto();
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
+        dto.setStartDate(task.getStartDate());
+        dto.setEndDate(task.getEndDate());
         dto.setDueDate(task.getDueDate());
         model.addAttribute("taskId", id);
         model.addAttribute("task", dto);
+
         return "task-edit-form";
     }
 
@@ -76,6 +80,8 @@ public class TaskController {
         TaskDto dto = new TaskDto();
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
+        dto.setStartDate(task.getStartDate());
+        dto.setEndDate(task.getEndDate());
         dto.setDueDate(task.getDueDate());
         return dto;
     }

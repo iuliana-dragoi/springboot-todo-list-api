@@ -22,6 +22,8 @@ public class TaskServiceImpl implements TaskService {
         Task task = new Task();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
+        task.setStartDate(dto.getStartDate());
+        task.setEndDate(dto.getEndDate());
         task.setDueDate(dto.getDueDate());
         return repository.save(task);
     }
@@ -35,6 +37,8 @@ public class TaskServiceImpl implements TaskService {
         Task task = optional.get();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
+        task.setStartDate(dto.getStartDate());
+        task.setEndDate(dto.getEndDate());
         task.setDueDate(dto.getDueDate());
         return repository.save(task);
     }

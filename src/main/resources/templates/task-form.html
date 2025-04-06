@@ -21,6 +21,14 @@
                 <input type="text" id="description" class="form-control" th:field="*{description}" required>
             </div>
             <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="datetime-local" id="startDate" name="startDate" class="form-control" th:field="*{startDate}" />
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="datetime-local" id="endDate" name="endDate" class="form-control" th:field="*{endDate}" />
+            </div>
+            <div class="mb-3">
                 <label for="dueDate" class="form-label">Due Date</label>
                 <input type="datetime-local" id="dueDate" class="form-control" th:field="*{dueDate}" required>
             </div>
