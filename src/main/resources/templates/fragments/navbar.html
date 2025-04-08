@@ -1,0 +1,67 @@
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar">-->
+<!--    <div class="container-fluid">-->
+
+<!--        <a class="navbar-brand" href="#">To-Do Tracker</a>-->
+
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
+<!--                data-bs-target="#navbarNav" aria-controls="navbarNav"-->
+<!--                aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav ms-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/dashboard/tasks}">Tasks</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/logout}">Logout</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+
+
+<!-- Navbar -->
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" th:fragment="navbar">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="/img/LogoNoBk.png" height="32" alt="Logo" loading="lazy" />
+            <span class="fs-5">Crode To-Do Tracker</span>
+        </a>
+
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row align-items-center">
+
+            <span class="fs-6">Welcome, Iuliana</span>
+            <!-- Avatar -->
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-dropdown-init aria-expanded="false">
+                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle" height="32" alt="Profile" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">My profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

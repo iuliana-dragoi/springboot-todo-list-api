@@ -1,17 +1,18 @@
 package com.crode.todo_list_api.controller;
 
-import com.crode.todo_list_api.model.Task;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.crode.todo_list_api.repository.TaskRepository;
 import org.springframework.stereotype.Controller;
+import com.crode.todo_list_api.model.Task;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/dashboard/calendar")
 public class CalendarController {
 
     private final TaskRepository taskRepository;
@@ -20,7 +21,7 @@ public class CalendarController {
         this.taskRepository = taskRepository;
     }
 
-    @GetMapping("/calendar")
+    @GetMapping()
     public String getCalendar(Model model) {
         List<Task> tasks = taskRepository.findAll();
 
@@ -34,7 +35,7 @@ public class CalendarController {
         }
 
         model.addAttribute("tasks", events);
-        return "calendar";
+        return "calendar/calendar";
     }
 }
 

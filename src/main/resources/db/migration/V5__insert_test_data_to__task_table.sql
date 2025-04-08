@@ -1,7 +1,5 @@
 INSERT INTO tasks (title, description, due_date, completed, start_date, end_date)
 VALUES
-    ('Complete homework', 'Finish the mathematics homework', '2025-04-10 09:00:00', false, '2025-04-10 09:00:00', '2025-04-10 12:00:00'),
-    ('Buy groceries', 'Purchase vegetables, fruits, and dairy', '2025-04-06 10:00:00', false, '2025-04-06 10:00:00', '2025-04-06 13:00:00'),
-    ('Prepare meeting agenda', 'Draft the agenda for next Monday’s meeting', '2025-04-07 08:00:00', false, '2025-04-07 08:00:00', '2025-04-07 10:00:00'),
-    ('Call John', 'Follow up with John regarding the project status', '2025-04-05 14:00:00', false, '2025-04-05 14:00:00', '2025-04-05 15:00:00'),
-    ('Attend yoga class', 'Go to the evening yoga session', '2025-04-06 18:00:00', false, '2025-04-06 18:00:00', '2025-04-06 19:00:00');
+    ('Reading', 'Read at least 20 pages of a book daily', '2025-04-30 20:00:00', false, '2025-04-08 08:00:00', '2025-04-30 20:00:00'),
+    ('Workout', 'Perform a daily 30-minute workout routine', '2025-04-30 09:00:00', false, '2025-04-08 07:00:00', '2025-04-30 09:00:00'),
+    ('Journaling', 'Write a daily journal entry reflecting on the day', '2025-04-30 22:00:00', false, '2025-04-08 21:00:00', '2025-04-30 22:00:00');

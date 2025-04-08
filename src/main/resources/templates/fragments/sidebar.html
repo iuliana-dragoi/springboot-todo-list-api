@@ -1,0 +1,27 @@
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" th:fragment="sidebar">
+    <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+
+            <a th:href="@{/dashboard}"
+               th:classappend="${currentPath == '/dashboard'} ? 'active' : ''"
+               class="list-group-item list-group-item-action py-2"
+               data-mdb-ripple-init aria-current="true">
+                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Today Tasks</span>
+            </a>
+
+            <a th:href="@{/dashboard/tasks}"
+               th:classappend="${currentPath == '/dashboard/tasks'} ? 'active' : ''"
+               class="list-group-item list-group-item-action py-2"
+               data-mdb-ripple-init>
+                <i class="fas fa-tasks fa-fw me-3"></i><span>All Tasks</span>
+            </a>
+
+            <a th:href="@{/dashboard/calendar}"
+               th:classappend="${currentPath == '/dashboard/calendar'} ? 'active' : ''"
+               class="list-group-item list-group-item-action py-2"
+               data-mdb-ripple-init>
+                <i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span>
+            </a>
+        </div>
+    </div>
+</nav>

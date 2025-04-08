@@ -1,0 +1,49 @@
+<!--https://fullcalendar.io/docs/initialize-globals-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet">
+    <!-- FullCalendar JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js"></script>
+    <!-- Initialize global values -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js'></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth'
+            });
+            calendar.render();
+        });
+    </script>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <!-- FullCalendar Display -->
+        <div id="calendar"></div>
+
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                // Check if FullCalendar is loaded correctly
+                if (typeof FullCalendar === "undefined") {
+                    console.error("FullCalendar is not defined.");
+                } else {
+                    var calendarEl = document.getElementById('calendar');
+
+                    // Initialize FullCalendar
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        events: /*[[${tasks}]]*/[],  // Thymeleaf variable to pass events to calendar
+                    });
+
+                    calendar.render();
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
