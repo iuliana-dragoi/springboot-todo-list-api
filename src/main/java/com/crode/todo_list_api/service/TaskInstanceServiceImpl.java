@@ -30,4 +30,19 @@ public class TaskInstanceServiceImpl implements TaskInstanceService{
     public TaskInstance getTaskInstanceForTaskAndDate(Long taskId, LocalDateTime start, LocalDateTime end) {
         return taskInstanceRepository.findByTaskIdAndDateRange(taskId, start, end).orElse(null);
     }
+
+    @Override
+    public long getCompletedByTaskId(Long taskId) {
+        return taskInstanceRepository.countCompletedByTaskId(taskId);
+    }
+
+    @Override
+    public TaskInstance getById(long taskId) {
+        return taskInstanceRepository.findById(taskId).orElse(null);
+    }
+
+    @Override
+    public void updateTaskInstance(Long id, TaskInstance taskInstance) {
+        taskInstanceRepository.save(taskInstance);
+    }
 }

@@ -13,28 +13,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
 
-    private final TaskService service;
+    private final TaskService taskService;
 
     private final TaskInstanceService taskInstanceService;
 
-    public DashboardController(TaskService service, TaskInstanceService taskInstanceService) {
-        this.service = service;
+    public DashboardController(TaskService taskService, TaskInstanceService taskInstanceService) {
+        this.taskService = taskService;
         this.taskInstanceService = taskInstanceService;
     }
 
     @GetMapping()
     public String showDashboard(Model model) {
-        List<Task> allTasks = service.getAllTasks();
-        List<TaskInstanceDto> taskInstanceDtos = getTaskInstancesForToday(allTasks);
-        model.addAttribute("tasks", taskInstanceDtos);
+        List<Task> tasks = taskService.getAllTasks();
+        addTaskInstances(model, tasks);
+        addTaskStatuses(model, tasks);
         return "dashboard/index";
+    }
+
+    private void addTaskInstances(Model model, List<Task> tasks) {
+        List<TaskInstanceDto> taskInstanceDtos = getTaskInstancesForToday(tasks);
+
+        List<TaskInstanceDto> completedTasks = new ArrayList<>();
+        List<TaskInstanceDto> incompleteTasks = new ArrayList<>();
+        for (TaskInstanceDto taskInstanceDto : taskInstanceDtos) {
+            if (taskInstanceDto.getCompleted()) {
+                completedTasks.add(taskInstanceDto);
+            } else {
+                incompleteTasks.add(taskInstanceDto);
+            }
+        }
+
+        model.addAttribute("completedTasks", completedTasks);
+        model.addAttribute("incompleteTasks", incompleteTasks);
+//        model.addAttribute("tasks", taskInstanceDtos);
+    }
+
+    private void addTaskStatuses(Model model, List<Task> tasks) {
+        Map<String, Long> completedMap = new HashMap<>();
+        tasks.stream().forEach(task -> {
+            long completed = taskInstanceService.getCompletedByTaskId(task.getId());
+            completedMap.put(task.getTitle(), completed);
+        });
+        model.addAttribute("completedMap", completedMap);
     }
 
     private List<TaskInstanceDto> getTaskInstancesForToday(List<Task> tasks) {

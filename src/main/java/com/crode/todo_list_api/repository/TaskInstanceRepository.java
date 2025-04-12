@@ -17,7 +17,6 @@ public interface TaskInstanceRepository extends JpaRepository<TaskInstance, Long
     Optional<TaskInstance> findByTaskIdAndDate(Long taskId, LocalDateTime date);
 
     @Query("SELECT ti FROM TaskInstance ti WHERE ti.task.id = :taskId AND ti.date >= :start AND ti.date < :end")
-        //    @Query("SELECT ti FROM TaskInstance ti WHERE ti.task.id = :taskId AND ti.date BETWEEN :start AND :end")
     Optional<TaskInstance> findByTaskIdAndDateRange(@Param("taskId") Long taskId,
                                                     @Param("start") LocalDateTime startOfDay,
                                                     @Param("end") LocalDateTime endOfDay);
@@ -28,4 +27,7 @@ public interface TaskInstanceRepository extends JpaRepository<TaskInstance, Long
     void deleteOutsideDateRange(@Param("taskId") Long taskId,
                                 @Param("startDate") LocalDateTime startDate,
                                 @Param("endDate") LocalDateTime endDate);
+
+    @Query("SELECT COUNT(ti) FROM TaskInstance ti WHERE ti.task.id = :taskId AND ti.completed = true")
+    long countCompletedByTaskId(@Param("taskId") Long taskId);
 }
