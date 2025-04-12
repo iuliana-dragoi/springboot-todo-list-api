@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS task_instances (
+    id BIGSERIAL PRIMARY KEY,
+    task_id BIGINT REFERENCES tasks(id) ON DELETE CASCADE,
+    date DATE NOT NULL,
+    completed BOOLEAN DEFAULT FALSE
+);

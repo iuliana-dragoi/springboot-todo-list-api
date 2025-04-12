@@ -1,5 +1,6 @@
 package com.crode.todo_list_api.model;
 
+import com.crode.todo_list_api.utils.TaskType;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,6 +29,11 @@ public class Task {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @Enumerated(EnumType.STRING)
+    private TaskType type;
+
+    private Integer recurrenceDays;
 
     @PrePersist
     protected void onCreate() {
@@ -110,6 +116,22 @@ public class Task {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
+    }
+
+    public Integer getRecurrenceDays() {
+        return recurrenceDays;
+    }
+
+    public void setRecurrenceDays(Integer recurrenceDays) {
+        this.recurrenceDays = recurrenceDays;
     }
 }
 

@@ -22,6 +22,20 @@
                 <label for="endDate" class="form-label">End Date</label>
                 <input type="datetime-local" id="endDate" name="endDate" class="form-control" th:field="*{endDate}" required />
             </div>
+
+            <div class="mb-3">
+                <label for="type" class="form-label">Task Type</label>
+                <select id="type" name="type" class="form-control" th:field="*{type}" required>
+                    <option value="HABIT">Habit</option>
+                    <option value="ONE_TIME">One-time</option>
+                    <option value="RECURRING">Recurring</option>
+                </select>
+            </div>
+
+            <div class="mb-3" th:if="${task.type == 'HABIT'}">
+                <label for="recurrenceDays" class="form-label">Number of Days (for Habit)</label>
+                <input type="number" id="recurrenceDays" name="recurrenceDays" class="form-control" th:field="*{recurrenceDays}" min="1" max="7" required />
+            </div>
 <!--            <div class="mb-3">-->
 <!--                <label for="dueDate" class="form-label">Due Date</label>-->
 <!--                <input type="datetime-local" id="dueDate" class="form-control" th:field="*{dueDate}">-->

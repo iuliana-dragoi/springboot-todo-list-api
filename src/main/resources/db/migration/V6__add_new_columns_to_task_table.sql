@@ -1,0 +1,2 @@
+ALTER TABLE tasks ADD COLUMN type VARCHAR(50);
+ALTER TABLE tasks ADD COLUMN recurrence_days INT;

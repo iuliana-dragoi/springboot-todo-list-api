@@ -19,6 +19,12 @@ public class TaskDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dueDate;
 
+    private String type;
+
+    private boolean completed;
+
+    private int recurrenceDays;
+
     public String getTitle() {
         return title;
     }
@@ -57,5 +63,29 @@ public class TaskDto {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public int getRecurrenceDays() {
+        return recurrenceDays;
+    }
+
+    public void setRecurrenceDays(int recurrenceDays) {
+        this.recurrenceDays = recurrenceDays;
     }
 }
