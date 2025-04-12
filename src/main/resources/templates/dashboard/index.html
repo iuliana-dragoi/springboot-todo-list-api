@@ -8,20 +8,29 @@
         <div class="row">
             <div class="col">
                 <ul class="list-unstyled d-flex flex-row">
-                    <li th:each="entry : ${completedMap}" class="d-inline-block me-3 mb-2">
-                        <button type="button" class="btn btn-primary btn-lg btn-floating" style="height: 64px; width: 64px;" data-mdb-ripple-init>
-                            <span th:text="${entry.key}"></span>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-info" th:text="${entry.value}" style="font-size: 1rem;">
-                            <span class="visually-hidden">Task status</span>
-                            </span>
-                        </button>
+                    <li th:each="entry : ${completedMap}" class="d-inline-block me-2">
+                        <div style="position: relative;">
+                                <!-- Blue badge if value is positive -->
+                                <span class="badge bg-primary badge-number"
+                                      th:if="${entry.value > 0}"
+                                      th:text="${entry.value}"></span>
+
+                                <!-- Red badge if value is 0 or less -->
+                                <span class="badge bg-danger badge-number"
+                                      th:unless="${entry.value > 0}"
+                                      th:text="${entry.value}"></span>
+
+                                <!-- Rounded card with centered title -->
+                                <div class="card custom-card">
+                                    <p class="card-title mb-0" th:text="${entry.key}"></p>
+                                </div>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
 
         <div class="row">
-
             <!-- Tabs navs -->
             <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -68,7 +77,6 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
             <!-- Tabs content -->
         </div>

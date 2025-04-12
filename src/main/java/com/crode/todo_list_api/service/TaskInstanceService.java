@@ -2,6 +2,7 @@ package com.crode.todo_list_api.service;
 
 import com.crode.todo_list_api.model.TaskInstance;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface TaskInstanceService {
 
@@ -16,4 +17,6 @@ public interface TaskInstanceService {
     TaskInstance getById(long taskId);
 
     void updateTaskInstance(Long id, TaskInstance taskInstance);
+
+    List<TaskInstance> getAll();
 }

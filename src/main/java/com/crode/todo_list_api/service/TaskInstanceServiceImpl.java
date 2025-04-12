@@ -4,6 +4,7 @@ import com.crode.todo_list_api.model.TaskInstance;
 import com.crode.todo_list_api.repository.TaskInstanceRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +45,10 @@ public class TaskInstanceServiceImpl implements TaskInstanceService{
     @Override
     public void updateTaskInstance(Long id, TaskInstance taskInstance) {
         taskInstanceRepository.save(taskInstance);
+    }
+
+    @Override
+    public List<TaskInstance> getAll() {
+        return taskInstanceRepository.findAll();
     }
 }
