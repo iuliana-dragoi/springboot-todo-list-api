@@ -2,12 +2,17 @@ package com.crode.todo_list_api.dto;
 
 import com.crode.todo_list_api.utils.TaskType;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
-public class TaskInstanceDto {
+public class TaskInstanceDto implements Comparable<TaskInstanceDto> {
 
     private Long id;
     private Long taskId;
     private LocalDateTime date;
+
+    private String formattedDate;
+
     private Boolean completed;
     private TaskType type;
 
@@ -51,6 +56,14 @@ public class TaskInstanceDto {
         this.date = date;
     }
 
+    public String getFormattedDate() {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
+
     public Boolean getCompleted() {
         return completed;
     }
@@ -81,5 +94,23 @@ public class TaskInstanceDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TaskInstanceDto)) return false;
+        TaskInstanceDto that = (TaskInstanceDto) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getTaskId(), that.getTaskId()) && Objects.equals(getDate(), that.getDate()) && Objects.equals(getCompleted(), that.getCompleted()) && getType() == that.getType() && Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getDescription(), that.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTaskId(), getDate(), getCompleted(), getType(), getTitle(), getDescription());
+    }
+
+    @Override
+    public int compareTo(TaskInstanceDto o) {
+        return this.getDate().compareTo(o.getDate());
     }
 }

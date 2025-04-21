@@ -56,6 +56,9 @@
                                     <a th:href="@{/dashboard/task-instances/toggle/{id}(id=${taskInstance.id})}" th:class="${taskInstance.completed} ? 'btn btn-success' : 'btn btn-primary'" data-mdb-ripple-init>
                                         <span th:text="${taskInstance.completed} ? 'Mark as Incomplete' : 'Complete'"></span>
                                     </a>
+                                    <a th:href="@{/dashboard/task-instances/details/{id}(id=${taskInstance.id})}" class="btn btn-secondary ms-2">
+                                        View Details
+                                    </a>
                                 </div>
                             </div>
                         </li>
@@ -71,6 +74,9 @@
                                     <p class="card-text" th:text="${taskInstance.description}"></p>
                                     <a th:href="@{/dashboard/task-instances/toggle/{id}(id=${taskInstance.id})}" th:class="${taskInstance.completed} ? 'btn btn-success' : 'btn btn-primary'" data-mdb-ripple-init>
                                         <span th:text="${taskInstance.completed} ? 'Mark as Incomplete' : 'Complete'"></span>
+                                        <a th:href="@{/dashboard/task-instances/details/{id}(id=${taskInstance.id})}" class="btn btn-secondary ms-2">
+                                            View Details
+                                        </a>
                                     </a>
                                 </div>
                             </div>

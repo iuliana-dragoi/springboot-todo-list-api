@@ -28,8 +28,8 @@ public class TaskInstanceServiceImpl implements TaskInstanceService{
     }
 
     @Override
-    public TaskInstance getTaskInstanceForTaskAndDate(Long taskId, LocalDateTime start, LocalDateTime end) {
-        return taskInstanceRepository.findByTaskIdAndDateRange(taskId, start, end).orElse(null);
+    public List<TaskInstance> getTaskInstanceForTaskAndDate(Long taskId, LocalDateTime start, LocalDateTime end) {
+        return taskInstanceRepository.findByTaskIdAndDateRange(taskId, start, end);
     }
 
     @Override

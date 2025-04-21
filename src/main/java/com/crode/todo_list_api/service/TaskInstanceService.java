@@ -10,7 +10,7 @@ public interface TaskInstanceService {
 
     TaskInstance saveTaskInstance(TaskInstance taskInstance);
 
-    TaskInstance getTaskInstanceForTaskAndDate(Long taskId, LocalDateTime start, LocalDateTime end);
+    List<TaskInstance> getTaskInstanceForTaskAndDate(Long taskId, LocalDateTime start, LocalDateTime end);
 
     long getCompletedByTaskId(Long taskId);
 

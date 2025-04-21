@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,9 +18,9 @@ public interface TaskInstanceRepository extends JpaRepository<TaskInstance, Long
     Optional<TaskInstance> findByTaskIdAndDate(Long taskId, LocalDateTime date);
 
     @Query("SELECT ti FROM TaskInstance ti WHERE ti.task.id = :taskId AND ti.date >= :start AND ti.date < :end")
-    Optional<TaskInstance> findByTaskIdAndDateRange(@Param("taskId") Long taskId,
-                                                    @Param("start") LocalDateTime startOfDay,
-                                                    @Param("end") LocalDateTime endOfDay);
+    List<TaskInstance> findByTaskIdAndDateRange(@Param("taskId") Long taskId,
+                                                @Param("start") LocalDateTime startOfDay,
+                                                @Param("end") LocalDateTime endOfDay);
 
     @Modifying
     @Transactional

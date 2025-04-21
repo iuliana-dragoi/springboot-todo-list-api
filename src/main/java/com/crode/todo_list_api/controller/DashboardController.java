@@ -70,7 +70,7 @@ public class DashboardController {
 
         return tasks.stream()
             .filter(task -> task.getType() == TaskType.HABIT)
-            .map(task -> taskInstanceService.getTaskInstanceForTaskAndDate(task.getId(), startOfDay, endOfDay))
+            .map(task -> taskInstanceService.getTaskInstanceForTaskAndDate(task.getId(), startOfDay, endOfDay).get(0))
             .filter(Objects::nonNull)
             .map(TaskUtil::taskInstanceToDto)
             .toList();
