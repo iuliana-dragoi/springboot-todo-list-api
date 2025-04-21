@@ -9,8 +9,10 @@ public class TaskUtil {
 
     public static TaskDto taskToDto(Task task) {
         TaskDto dto = new TaskDto();
+        dto.setId(task.getId());
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
+        dto.setType(task.getType().name());
         dto.setStartDate(task.getStartDate());
         dto.setEndDate(task.getEndDate());
         dto.setDueDate(task.getDueDate());

@@ -31,20 +31,19 @@ public class TaskServiceImpl implements TaskService {
         task.setStartDate(dto.getStartDate());
         task.setEndDate(dto.getEndDate());
         task.setDueDate(dto.getDueDate());
-        task.setType(TaskType.HABIT);
+        TaskType type = TaskType.fromString(dto.getType());
+        task.setType(type);
         task.setRecurrenceDays(dto.getRecurrenceDays());
         task = repository.save(task);
 
         if (task.getType() == TaskType.HABIT) {
             LocalDateTime currentDate = task.getStartDate();
             while (!currentDate.isAfter(task.getEndDate())) {
-                TaskInstance taskInstance = new TaskInstance();
-                taskInstance.setTask(task);
-                taskInstance.setDate(currentDate);
-                taskInstance.setCompleted(false);
-                taskInstanceRepository.save(taskInstance);
+                createTaskInstance(task, currentDate);
                 currentDate = currentDate.plusDays(1);
             }
+        } else if (task.getType() == TaskType.ONE_TIME) {
+            createTaskInstance(task, dto.getStartDate());
         }
 
         return task;
@@ -62,24 +61,38 @@ public class TaskServiceImpl implements TaskService {
         task.setStartDate(dto.getStartDate());
         task.setEndDate(dto.getEndDate());
         task.setDueDate(dto.getDueDate());
+        TaskType type = TaskType.fromString(dto.getType());
+        task.setType(type);
 
         Task updatedTask = repository.save(task);
 
         taskInstanceRepository.deleteOutsideDateRange(id, dto.getStartDate(), dto.getEndDate());
-        LocalDateTime currentDate = dto.getStartDate();
-        while (!currentDate.isAfter(dto.getEndDate())) {
-            boolean exists = taskInstanceRepository.findByTaskIdAndDate(id, currentDate).isPresent();
-            if (!exists) {
-                TaskInstance taskInstance = new TaskInstance();
-                taskInstance.setTask(updatedTask);
-                taskInstance.setDate(currentDate);
-                taskInstance.setCompleted(false);
-                taskInstanceRepository.save(taskInstance);
+
+        if (task.getType() == TaskType.HABIT) {
+            LocalDateTime currentDate = dto.getStartDate();
+            while (!currentDate.isAfter(dto.getEndDate())) {
+                boolean exists = taskInstanceRepository.findByTaskIdAndDate(id, currentDate).isPresent();
+                if (!exists) {
+                    createTaskInstance(updatedTask, currentDate);
+                }
+                currentDate = currentDate.plusDays(1);
             }
-            currentDate = currentDate.plusDays(1);
+        } else if (type == TaskType.ONE_TIME) {
+            boolean exists = taskInstanceRepository.findByTaskIdAndDate(id, dto.getStartDate()).isPresent();
+            if (!exists) {
+                createTaskInstance(updatedTask, dto.getStartDate());
+            }
         }
 
         return updatedTask;
+    }
+
+    private void createTaskInstance(Task task, LocalDateTime date) {
+        TaskInstance instance = new TaskInstance();
+        instance.setTask(task);
+        instance.setDate(date);
+        instance.setCompleted(false);
+        taskInstanceRepository.save(instance);
     }
 
     @Override

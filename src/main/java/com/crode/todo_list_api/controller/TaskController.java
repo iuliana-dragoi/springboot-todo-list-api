@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/dashboard/tasks")
@@ -22,10 +23,9 @@ public class TaskController {
 
     @GetMapping()
     public String listTasks(Model model, @RequestParam(required = false) Boolean completed) {
-        List<Task> tasks = (completed == null)
-                ? service.getAllTasks()
-                : service.getTasksByCompletionStatus(completed);
-        model.addAttribute("tasks", tasks);
+        List<Task> tasks = (completed == null) ? service.getAllTasks() : service.getTasksByCompletionStatus(completed);
+        List<TaskDto> taskDtos = tasks.stream().map(TaskUtil::taskToDto).collect(Collectors.toList());
+        model.addAttribute("tasks", taskDtos);
         return "tasks/task-list";
     }
 
