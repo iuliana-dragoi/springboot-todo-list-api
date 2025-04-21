@@ -7,6 +7,7 @@ import com.crode.todo_list_api.utils.TaskUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -30,7 +31,11 @@ public class TaskController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("task", new TaskDto());
+        TaskDto task = new TaskDto();
+        LocalDateTime now = LocalDateTime.now();
+        task.setStartDate(now);
+        task.setEndDate(now.toLocalDate().atTime(23, 59, 59));
+        model.addAttribute("task", task);
         return "tasks/task-form";
     }
 
