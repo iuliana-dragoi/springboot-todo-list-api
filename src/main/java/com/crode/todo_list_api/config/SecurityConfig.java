@@ -31,7 +31,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, Environment env) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/", "/login").permitAll() // "/register" -> Todo for later
                 .anyRequest().authenticated()
 //                .anyRequest().permitAll() // for test
@@ -50,10 +49,6 @@ public class SecurityConfig {
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
             )
             .authenticationProvider(authenticationProvider());
-
-        if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
-            http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
-        }
 
         return http.build();
     }
