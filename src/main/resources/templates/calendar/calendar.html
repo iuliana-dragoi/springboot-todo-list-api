@@ -40,27 +40,25 @@
                         events: /*[[${tasks}]]*/[],  // Thymeleaf variable to pass events to calendar
 
                         eventDidMount: function(info) {
-                            // Check the completion status and apply the correct background color
-                            var taskStatus = info.event.extendedProps.completed; // Assuming "completed" is passed as a prop
-                            if (taskStatus === true) {
-                                info.el.style.backgroundColor = 'lightgreen';   // Green for completed tasks
+                            const isCompleted = info.event.extendedProps.completed;
+                            const taskType = info.event.extendedProps.type;
+
+                            if (isCompleted) {
+                                info.el.style.backgroundColor = '#98FB98';
                             } else {
-                                info.el.style.backgroundColor = 'bisque';     // Blue for incompleted tasks
+                                // Apply color based on type only if not completed
+                                switch (taskType) {
+                                    case 'HABIT':
+                                        info.el.style.backgroundColor = '#E1EBEE';
+                                        break;
+                                    case 'ONE_TIME':
+                                        info.el.style.backgroundColor = '#B0E0E6';
+                                        break;
+                                    default:
+                                        info.el.style.backgroundColor = 'lightgrey'; // Default/fallback
+                                }
                             }
                         },
-                        // eventContent: function(arg) {
-                        //     // You can modify the content of the event if necessary
-                        //     return { html: '<div class="fc-event-title">' + arg.event.title + '</div>' }
-                        // },
-                        // Optionally, define more FullCalendar options here if needed
-                        // eventRender: function(info) {
-                        //     // Optional: you can further customize the event rendering
-                        //     if (info.event.extendedProps.completed) {
-                        //         info.el.style.backgroundColor = 'green';
-                        //     } else {
-                        //         info.el.style.backgroundColor = 'blue';
-                        //     }
-                        // },
                     });
 
                     calendar.render();

@@ -46,15 +46,17 @@ public class CalendarController {
             event.put("start", taskInstance.getDate());
             event.put("end", taskInstance.getDate());
             event.put("completed", taskInstance.getCompleted());
+            event.put("type", taskInstance.getType().name());
 
             // Set different color based on completion status
-//            if (taskInstance.getCompleted()) {
-//                event.put("backgroundColor", "green");  // Completed task color
-//                event.put("borderColor", "darkgreen");
-//            } else {
-//                event.put("backgroundColor", "red");    // Incomplete task color
-//                event.put("borderColor", "darkred");
-//            }
+            if (taskInstance.getCompleted()) {
+                event.put("backgroundColor", "green");
+                event.put("borderColor", "darkgreen");
+            }
+            else {
+                event.put("backgroundColor", "red");
+                event.put("borderColor", "darkred");
+            }
 
             events.add(event);
         }

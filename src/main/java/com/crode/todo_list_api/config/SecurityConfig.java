@@ -30,25 +30,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, Environment env) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/h2-console/**").permitAll()
-                    .requestMatchers("/", "/login", "/register").permitAll()
-                    .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                    .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/tasks", true)
-                    .permitAll()
-                )
-//                .logout(logout -> logout
-//                    .logoutUrl("/logout")
-//                    .logoutSuccessUrl("/login?logout")
-//                    .permitAll()
-//                )
-                .headers(headers -> headers
-                    .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                )
-                .authenticationProvider(authenticationProvider());
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/", "/login").permitAll() // "/register" -> Todo for later
+                .anyRequest().authenticated()
+//                .anyRequest().permitAll() // for test
+            )
+            .formLogin(form -> form
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/dashboard", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            )
+            .headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+            )
+            .authenticationProvider(authenticationProvider());
 
         if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
             http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));

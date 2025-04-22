@@ -2,6 +2,7 @@ package com.crode.todo_list_api.controller;
 
 import com.crode.todo_list_api.dto.TaskInstanceDto;
 import com.crode.todo_list_api.model.Task;
+import com.crode.todo_list_api.model.TaskInstance;
 import com.crode.todo_list_api.service.TaskInstanceService;
 import com.crode.todo_list_api.service.TaskService;
 import com.crode.todo_list_api.utils.TaskType;
@@ -14,20 +15,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
 
     private final TaskService taskService;
-
     private final TaskInstanceService taskInstanceService;
-
     public DashboardController(TaskService taskService, TaskInstanceService taskInstanceService) {
         this.taskService = taskService;
         this.taskInstanceService = taskInstanceService;
     }
-
     @GetMapping()
     public String showDashboard(Model model) {
         List<Task> tasks = taskService.getAllTasks();
@@ -35,7 +34,6 @@ public class DashboardController {
         addTaskStatuses(model, tasks);
         return "dashboard/index";
     }
-
     private void addTaskInstances(Model model, List<Task> tasks) {
         List<TaskInstanceDto> taskInstanceDtos = getTaskInstancesForToday(tasks);
 
@@ -51,26 +49,32 @@ public class DashboardController {
 
         model.addAttribute("completedTasks", completedTasks);
         model.addAttribute("incompleteTasks", incompleteTasks);
-//        model.addAttribute("tasks", taskInstanceDtos);
     }
-
     private void addTaskStatuses(Model model, List<Task> tasks) {
         Map<String, Long> completedMap = new HashMap<>();
+        AtomicInteger oneTimeCount = new AtomicInteger();
         tasks.stream().forEach(task -> {
             long completed = taskInstanceService.getCompletedByTaskId(task.getId());
-            completedMap.put(task.getTitle(), completed);
+
+            if (task.getType() == TaskType.HABIT) {
+                completedMap.put(task.getTitle(), completed);
+            } else if (task.getType() == TaskType.ONE_TIME && completed > 0) {
+                oneTimeCount.getAndIncrement();
+            }
         });
         model.addAttribute("completedMap", completedMap);
+        model.addAttribute("oneTimeTaskCount", oneTimeCount.get());
     }
-
     private List<TaskInstanceDto> getTaskInstancesForToday(List<Task> tasks) {
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
 
         return tasks.stream()
-            .filter(task -> task.getType() == TaskType.HABIT)
-            .map(task -> taskInstanceService.getTaskInstanceForTaskAndDate(task.getId(), startOfDay, endOfDay).get(0))
+            .map(task -> {
+                List<TaskInstance> instances = taskInstanceService.getTaskInstanceForTaskAndDate(task.getId(), startOfDay, endOfDay);
+                return instances.isEmpty() ? null : instances.get(0);
+            })
             .filter(Objects::nonNull)
             .map(TaskUtil::taskInstanceToDto)
             .toList();
